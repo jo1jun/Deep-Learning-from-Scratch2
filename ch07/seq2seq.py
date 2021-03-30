@@ -1,6 +1,7 @@
 # coding: utf-8
-import sys
-sys.path.append('..')
+import os, sys
+os.chdir(os.path.dirname(os.path.abspath(__file__))) 
+sys.path.append(os.pardir)
 from common.time_layers import *
 from common.base_model import BaseModel
 
@@ -26,11 +27,11 @@ class Encoder:
         xs = self.embed.forward(xs)
         hs = self.lstm.forward(xs)
         self.hs = hs
-        return hs[:, -1, :]
+        return hs[:, -1, :] # 윗 방향은 폐기.
 
     def backward(self, dh):
         dhs = np.zeros_like(self.hs)
-        dhs[:, -1, :] = dh
+        dhs[:, -1, :] = dh # 마지막 은닉벡터만 forward 때 pass 했으므로 backward 할 때도 마지막 은닉벡터만 pass
 
         dout = self.lstm.backward(dhs)
         dout = self.embed.backward(dout)

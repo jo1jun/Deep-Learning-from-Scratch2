@@ -174,7 +174,6 @@ class TimeLSTM:
         self.h, self.c = None, None # h와 c는 다음 블록에 인계할 마지막 RNN 계층의 은닉 상태와 기억 셀
         self.dh = None # dh는 이전 블록에 backward 할 gradient
         self.stateful = stateful
-        self.hh = 0
 
     def forward(self, xs):
         Wx, Wh, b = self.params
@@ -193,7 +192,7 @@ class TimeLSTM:
             layer = LSTM(*self.params) # LSTM 계층 생성
             self.h, self.c = layer.forward(xs[:, t, :], self.h, self.c) # LSTM 계층 forward 하여 해당 시각의 은닉 상태, 기억 셀 계산
             # 은닉 상태와 기억 셀은 매번 갱신되어 loop 가 끝나면 디음 블록에 인계할 마지막 은닉 상태가 저장됨.
-            hs[:, t, :] = self.h # 계산한 은닉 상태를 hs 에 저장 (기억 셀은 위로 전파 안 됨. 따라서 따로 모으지 않는다.)
+            hs[:, t, :] = self.h # 계산한 은닉 상태를 hs 에 저장 (기억 셀은 위로 전파 안 되고 옆으로만 전파. 따라서 따로 모으지 않는다.)
 
             self.layers.append(layer) # 생성한 LSTM 계층 list 에 append
 
