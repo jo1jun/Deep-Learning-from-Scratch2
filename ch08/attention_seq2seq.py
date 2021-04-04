@@ -1,6 +1,7 @@
 # coding: utf-8
-import sys
-sys.path.append('..')
+import os, sys
+os.chdir(os.path.dirname(os.path.abspath(__file__))) 
+sys.path.append(os.pardir)
 from common.time_layers import *
 from ch07.seq2seq import Encoder, Seq2seq
 from ch08.attention_layer import TimeAttention
@@ -32,7 +33,7 @@ class AttentionDecoder:
 
         self.embed = TimeEmbedding(embed_W)
         self.lstm = TimeLSTM(lstm_Wx, lstm_Wh, lstm_b, stateful=True)
-        self.attention = TimeAttention()
+        self.attention = TimeAttention() # TimeAttention layer 추가.
         self.affine = TimeAffine(affine_W, affine_b)
         layers = [self.embed, self.lstm, self.attention, self.affine]
 
@@ -47,8 +48,8 @@ class AttentionDecoder:
 
         out = self.embed.forward(xs)
         dec_hs = self.lstm.forward(out)
-        c = self.attention.forward(enc_hs, dec_hs)
-        out = np.concatenate((c, dec_hs), axis=2)
+        c = self.attention.forward(enc_hs, dec_hs) # attention layer 로 맥락 벡터 c 를 calculate
+        out = np.concatenate((c, dec_hs), axis=2) # 맥락 벡터 c 와 LSTM 에서 나온 은닉벡터를 concat 후 forward
         score = self.affine.forward(out)
 
         return score
@@ -79,8 +80,8 @@ class AttentionDecoder:
 
             out = self.embed.forward(x)
             dec_hs = self.lstm.forward(out)
-            c = self.attention.forward(enc_hs, dec_hs)
-            out = np.concatenate((c, dec_hs), axis=2)
+            c = self.attention.forward(enc_hs, dec_hs) # attention layer 로 맥락 벡터 c 를 calculate
+            out = np.concatenate((c, dec_hs), axis=2) # 맥락 벡터 c 와 LSTM 에서 나온 은닉벡터를 concat 후 forward
             score = self.affine.forward(out)
 
             sample_id = np.argmax(score.flatten())

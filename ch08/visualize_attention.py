@@ -1,6 +1,7 @@
 # coding: utf-8
-import sys
-sys.path.append('..')
+import os, sys
+os.chdir(os.path.dirname(os.path.abspath(__file__))) 
+sys.path.append(os.pardir)
 import numpy as np
 from dataset import sequence
 import matplotlib.pyplot as plt
