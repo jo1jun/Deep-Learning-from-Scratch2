@@ -36,7 +36,7 @@ class RNN:
         return dx, dh_prev
 
 
-class TimeRNN: # T개의 RNN 계층으로 구성됨
+class TimeRNN: # T개의 RNN 계층으로 구성됨 (T 는 전체 시계열 길이가 아니고, 데이터를 TimeRNN 에 반복적으로 block 단위로 순서대로 입력시킬 것.)
     def __init__(self, Wx, Wh, b, stateful=False): # stateful : 은닉상태 h 를 다음 블록에 인계하는 지 여부
         self.params = [Wx, Wh, b]
         self.grads = [np.zeros_like(Wx), np.zeros_like(Wh), np.zeros_like(b)]

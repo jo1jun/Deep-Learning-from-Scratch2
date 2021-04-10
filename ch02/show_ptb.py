@@ -7,6 +7,7 @@ from dataset import ptb
 
 corpus, word_to_id, id_to_word = ptb.load_data('train') # 'train', 'valid' 'test' 를 인수로 용도에 맞는 데이터 추출
 
+
 print('말뭉치 크기:', len(corpus))
 print('corpus[:30]:', corpus[:30])
 print()
