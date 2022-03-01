@@ -7,9 +7,6 @@ from common.trainer import RnnlmTrainer
 from dataset import ptb
 from simple_rnnlm import SimpleRnnlm
 
-# test jetbrain & github sync
-
-
 # 하이퍼파라미터 설정
 batch_size = 10
 wordvec_size = 100 # 단어의 분산 표현 차원 수
