@@ -8,6 +8,8 @@ from common.optimizer import SGD
 from dataset import ptb
 from simple_rnnlm import SimpleRnnlm
 
+# test2!!
+
 
 # 하이퍼파라미터 설정
 batch_size = 10 # 배치 개수를 의미. (각 배치안의 원소 수는 전체입력 999개 중 10개로 나누었으므로 99개)
